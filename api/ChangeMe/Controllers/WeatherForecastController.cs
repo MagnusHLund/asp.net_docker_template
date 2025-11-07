@@ -38,7 +38,7 @@ namespace ChangeMe.Controllers
                     TemperatureC = Random.Shared.Next(-20, 55),
                     Summary = Summaries[Random.Shared.Next(Summaries.Length)],
                 })
-                .ToList();
+                .ToArray();
 
             return test;
         }

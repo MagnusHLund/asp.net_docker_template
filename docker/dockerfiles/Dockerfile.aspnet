@@ -21,4 +21,4 @@ RUN apt-get update && apt-get install -y unzip curl && rm -rf /var/lib/apt/lists
 EXPOSE 65535 5678
 
 # Use dotnet watch on the API project, which is now at /app/ChangeMe.csproj
-CMD ["dotnet", "watch", "run", "--no-launch-profile", "--project", "ChangeMe.csproj"]
+CMD ["dotnet", "watch", "run", "--no-launch-profile", "--project", "ChangeMe.csproj", "--configuration", "Debug"]

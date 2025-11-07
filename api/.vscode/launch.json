@@ -5,7 +5,7 @@
       "name": "Docker: Attach to .NET Core",
       "type": "coreclr",
       "request": "attach",
-      "processId": "222",
+      "processId": "219",
       "sourceFileMap": {
         "/app": "${workspaceFolder}/ChangeMe"
       },
