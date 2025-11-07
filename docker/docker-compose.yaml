@@ -1,0 +1,21 @@
+services:
+  asp-net:
+    build:
+      context: ./../api/
+      dockerfile: ../docker/dockerfiles/Dockerfile.aspnet
+    container_name: change_me_api
+    working_dir: /app
+    volumes:
+      - ./../api/ChangeMe:/app
+      - /app/bin
+      - /app/obj
+    ports:
+      - 65535:65535 # Web port
+      - 5678:5678 # Debug port
+    networks:
+      - project_network
+    restart: unless-stopped
+
+networks:
+  project_network:
+    driver: bridge

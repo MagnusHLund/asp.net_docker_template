@@ -1,0 +1,20 @@
+{
+  "folders": [
+    {
+      "path": "./../api/",
+      "name": "ChangeMe API"
+    },
+    {
+      "path": "./../.git/"
+    }
+  ],
+  "settings": {
+    "dotnet.defaultSolution": "ChangeMe.sln",
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[csharp]": {
+      "editor.defaultFormatter": "ms-dotnettools.csharp"
+    }
+  }
+}
