@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0
+FROM mcr.microsoft.com/dotnet/sdk:10.0
 
 # The compose volume mounts the api/ChangeMe to /app, so all paths are relative to /app
 WORKDIR /app
