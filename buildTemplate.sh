@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Usage: ./rename.sh NewValue
-# This replaces all occurrences of "WebshopDetector" in filenames and file contents.
+# This replaces all occurrences of "ChangeMe" and "change_me" in filenames and file contents.
 
 # Require sudo
 if [ "$EUID" -ne 0 ]; then
@@ -17,16 +17,45 @@ if [ -z "$1" ]; then
 fi
 
 REPLACEMENT="$1"
+SCRIPT_NAME="$(basename "$0")"
 
 echo "Replacing contents inside files..."
-grep -rl "WebshopDetector" . | while read -r file; do
-  sed -i "s/WebshopDetector/${REPLACEMENT}/g" "$file"
+grep -rl "ChangeMe" . --exclude-dir=".git" | while IFS= read -r file; do
+  if [[ "$(basename "$file")" == "$SCRIPT_NAME" ]]; then
+    continue
+  fi
+  sed -i "s/ChangeMe/${REPLACEMENT}/g" "$file"
 done
 
-echo "Renaming files and directories..."
-find . -depth -name "*WebshopDetector*" | while read -r path; do
-  newpath=$(echo "$path" | sed "s/WebshopDetector/${REPLACEMENT}/g")
-  mv "$path" "$newpath"
+echo "Replacing contents inside files (change_me)..."
+grep -rl "change_me" . --exclude-dir=".git" | while IFS= read -r file; do
+  if [[ "$(basename "$file")" == "$SCRIPT_NAME" ]]; then
+    continue
+  fi
+  sed -i "s/change_me/${REPLACEMENT,,}/g" "$file"
+done
+
+echo "Renaming files..."
+find . -type f -name "*ChangeMe*" -not -path "./.git/*" | while IFS= read -r file; do
+  if [[ "$(basename "$file")" == "$SCRIPT_NAME" ]]; then
+    continue
+  fi
+  newfile="${file//ChangeMe/$REPLACEMENT}"
+  mv "$file" "$newfile"
+done
+
+find . -type f -name "*change_me*" -not -path "./.git/*" | while IFS= read -r file; do
+  if [[ "$(basename "$file")" == "$SCRIPT_NAME" ]]; then
+    continue
+  fi
+  newfile="${file//change_me/${REPLACEMENT,,}}"
+  mv "$file" "$newfile"
+done
+
+echo "Renaming directories..."
+find . -depth -type d -name "*ChangeMe*" -not -path "./.git*" | while IFS= read -r dir; do
+  newdir="${dir//ChangeMe/$REPLACEMENT}"
+  mv "$dir" "$newdir"
 done
 
 # Ask whether to delete README
